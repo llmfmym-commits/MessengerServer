@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیام‌رسان Node.js - چت آنلاین</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <div class="login-header">
+                    <h2>به پیام‌رسان خوش آمدید</h2>
+                    <p>نام کاربری خود را وارد کنید تا شروع به چت کنید</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="text" id="usernameInput" placeholder="نام کاربری خود را وارد کنید" required maxlength="20">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> ورود به چت
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="hidden">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fas fa-comments"></i> پیام‌رسان</h2>
+                    <div class="user-info">
+                        <img id="currentUserAvatar" class="avatar" alt="آواتار">
+                        <span id="currentUsername"></span>
+                    </div>
+                </div>
+
+                <div class="sidebar-content">
+                    <!-- Online Users -->
+                    <div class="sidebar-section">
+                        <h3>کاربران آنلاین <span id="onlineCount">0</span></h3>
+                        <div id="usersList" class="users-list"></div>
+                    </div>
+
+                    <!-- Rooms -->
+                    <div class="sidebar-section">
+                        <div class="section-header">
+                            <h3>اتاق‌ها</h3>
+                            <button id="createRoomBtn" class="btn-icon" title="ایجاد اتاق">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div id="roomsList" class="rooms-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <h3 id="currentRoomName">عمومی</h3>
+                        <span id="roomUserCount" class="user-count">0 کاربر</span>
+                    </div>
+                    <div class="chat-actions">
+                        <button id="emojiBtn" class="btn-icon" title="ایموجی">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button id="settingsBtn" class="btn-icon" title="تنظیمات">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div class="messages-container">
+                    <div id="messagesList" class="messages-list"></div>
+                    <div id="typingIndicator" class="typing-indicator hidden"></div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="message-input-container">
+                    <div class="input-actions">
+                        <button class="btn-icon" title="افزودن فایل">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="btn-icon" title="ارسال عکس">
+                            <i class="fas fa-image"></i>
+                        </button>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="messageInput" placeholder="پیام خود را بنویسید..." maxlength="1000">
+                        <button id="sendMessageBtn" class="btn-send" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emoji Picker -->
+    <div id="emojiPicker" class="emoji-picker hidden">
+        <div class="emoji-category">
+            <span>😀</span><span>😃</span><span>😄</span><span>😁</span><span>😆</span>
+            <span>😅</span><span>😂</span><span>🤣</span><span>😊</span><span>😇</span>
+            <span>🙂</span><span>🙃</span><span>😉</span><span>😌</span><span>😍</span>
+            <span>🥰</span><span>😘</span><span>😗</span><span>😙</span><span>😚</span>
+        </div>
+    </div>
+
+    <!-- Create Room Modal -->
+    <div id="createRoomModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>ایجاد اتاق جدید</h3>
+            <form id="createRoomForm">
+                <input type="text" id="roomNameInput" placeholder="نام اتاق" required maxlength="30">
+                <div class="modal-actions">
+                    <button type="button" id="cancelCreateRoom" class="btn-secondary">لغو</button>
+                    <button type="submit" class="btn-primary">ایجاد اتاق</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
